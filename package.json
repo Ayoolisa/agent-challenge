@@ -3,9 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev:agent": "mastra dev",
+    "dev:agent": "NODE_OPTIONS='--experimental-global-webcrypto' mastra dev",
     "dev:ui": "next dev --turbopack",
     "dev:debug": "LOG_LEVEL=debug npm run dev",
+    "dev:mcp": "tsx src/mastra/mcp/server.ts",
     "build:ui": "next build",
     "start:ui": "next start",
     "build:agent": "mastra build",
@@ -28,6 +29,7 @@
     "@mastra/mcp": "^0.13.4",
     "@mastra/memory": "0.15.4",
     "dotenv": "^17.2.3",
+    "express": "^5.1.0",
     "libsql": "^0.5.22",
     "mastra": "0.13.4",
     "next": ">=15.5.4",
@@ -38,7 +40,9 @@
   },
   "devDependencies": {
     "@eslint/eslintrc": "^3",
+    "@opentelemetry/auto-instrumentations-node": "^0.65.0",
     "@tailwindcss/postcss": "^4",
+    "@types/express": "^5.0.3",
     "@types/node": "^20",
     "@types/react": "^19",
     "@types/react-dom": "^19",
@@ -46,6 +50,7 @@
     "eslint": "^9",
     "eslint-config-next": "15.3.2",
     "tailwindcss": "^4",
+    "tsx": "^4.20.6",
     "typescript": "^5"
   }
 }
