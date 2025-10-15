@@ -1,23 +1,20 @@
 import { Agent } from '@mastra/core';
-import { MCPClient } from '@mastra/mcp';  // Client for pulling from server
+import { MCPClient } from '@mastra/mcp';
+import { checkCalendarTool } from '../tools/calendar';
 
-const mcpClient = new MCPClient({
-  servers: {
-    local: {
-      url: 'http://localhost:4112',  // Our SSE endpoint
-    },
-  },
-});
+// MCP client (from our server)
+import { mcpClient } from '../mcp/client';
 
 export const personalAssistant = new Agent({
   name: 'Personal Assistant',
   model: process.env.MODEL_NAME_AT_ENDPOINT || 'qwen3:0.6b',
   llmProvider: { apiUrl: process.env.OLLAMA_API_URL },
-  tools: await mcpClient.getTools(),  // Dynamic from MCP
+  tools: [checkCalendarTool],  // Our new tool—LLM calls dynamically
   async beforeToolCall(context) {
-    const userCtx = await mcpClient.getContext?.('userContext') || {};
-    if (userCtx.preferences?.timezone) context.timezone = userCtx.preferences.timezone;
+    // Pull from MCP before acting
+    const userCtx = await mcpClient.getContext('userContext') || {};
+    context.timezone = userCtx.preferences?.timezone || 'UTC';
     return context;
   },
-  systemPrompt: 'You are a helpful assistant. Use MCP for context and tools.',
+  systemPrompt: `You are a smart personal assistant. Use check_calendar for schedule questions. Remember user details via context.`,
 });

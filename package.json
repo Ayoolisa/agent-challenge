@@ -30,6 +30,7 @@
     "@mastra/memory": "0.15.4",
     "dotenv": "^17.2.3",
     "express": "^5.1.0",
+    "googleapis": "^163.0.0",
     "libsql": "^0.5.22",
     "mastra": "0.13.4",
     "next": ">=15.5.4",
@@ -41,6 +42,7 @@
   "devDependencies": {
     "@eslint/eslintrc": "^3",
     "@opentelemetry/auto-instrumentations-node": "^0.65.0",
+    "@opentelemetry/core": "^2.1.0",
     "@tailwindcss/postcss": "^4",
     "@types/express": "^5.0.3",
     "@types/node": "^20",
